@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LogInPage = () => {
   const [username, setUsername] = useState("");
@@ -23,23 +25,53 @@ const LogInPage = () => {
         // const userResponse = await fetch(`/user/${username}`);
         // const userData = await userResponse.json();
         // localStorage.setItem('fullname', userData.fullname);
-        
+
         console.log("Log in successful", data);
-        navigate("/home");
+        toast.success("Logged in successfully!", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          onClose: () => navigate("/home"),
+        });
       } else {
         console.log("Log in failed:", data.msg);
         console.error("Log in failed:", data.msg);
+        toast.error(`Login failed: ${data.msg}`, {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       }
     } catch (error) {
       console.error("Error during log in:", error);
+      toast.error("An error occurred during login. Please try again.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
   return (
     <div className="flex items-center justify-center w-screen h-screen ">
       <div className="bg-white h-1/2 w-1/2 p-10">
+        <ToastContainer/>
         <div>
-          <h1 className=" uppercase font-bold text-xl tracking-widest">Log In</h1>
+          <h1 className=" uppercase font-bold text-xl tracking-widest">
+            Log In
+          </h1>
           <p className=" font-thin text-[15px] tracking-widest mt-2">
             Welcome Back !
           </p>
@@ -84,7 +116,7 @@ const LogInPage = () => {
         <div className=" mt-5 flex items-center justify-center">
           <p className=" font-thin text-[15px] tracking-widest mt-2">
             Don't have an account ?{" "}
-            <Link to="/register" className="text-blue-800 font-bold">
+            <Link to="/register" className="text-blue-800 font-bold underline">
               Register
             </Link>
           </p>

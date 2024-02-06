@@ -6,6 +6,7 @@ import RegisterPage from "./pages/RegisterPage";
 import LogInPage from "./pages/LogInPage";
 import UploadPage from "./pages/UploadPage";
 
+
 function App() {
   return (
     <div className="h-full w-screen bg-gradient-to-r from-[#e9defa] to-[#fbfcdb]">
@@ -13,6 +14,7 @@ function App() {
 
       <BrowserRouter>
       <NavBar />
+
         <Routes>
           <Route path="/home" element={<HomePage />} />
           <Route path="/register" element={<RegisterPage />} />

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import {Link, useNavigate } from 'react-router-dom';
-
+import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const RegisterPage = () => {
   const [fullname, setFullname] = useState("");
@@ -12,31 +13,61 @@ const RegisterPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('http://localhost:3000/register', {
-        method: 'POST',
+      const response = await fetch("http://localhost:3000/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ fullname, username, password }),
       });
       const data = await response.json();
       if (response.status === 201) {
-        console.log('Registration successful', data);
-        navigate('/');
+        console.log("Registration successful", data);
+        toast.success("User Account Created Successfully", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          onClose: () => navigate("/"),
+        });
       } else {
-        console.error('Registration failed:', data.msg);
+        console.error("Registration failed:", data.msg);
+        toast.error(`Registration failed: ${data.msg}`, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       }
     } catch (error) {
-      console.log('Error:', error);
-      console.error('Error during registration:', error);
+      console.log("Error:", error);
+      console.error("Error during registration:", error);
+      toast.error("An error occurred during login. Please try again.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
   return (
     <div className="flex items-center justify-center w-screen h-screen ">
       <div className="bg-white h-1/2 w-1/2 p-10">
+        <ToastContainer />
         <div>
-          <h1 className=" uppercase font-bold text-xl tracking-widest">Register</h1>
+          <h1 className=" uppercase font-bold text-xl tracking-widest">
+            Register
+          </h1>
           <p className=" font-thin text-[15px] tracking-widest mt-2">
             Enter your details to create an account
           </p>
@@ -82,8 +113,9 @@ const RegisterPage = () => {
 
           <div className="bg-black mt-10 flex justify-center py-2">
             <button
-            type="submit"
-            className="items-center uppercase tracking-widest px-5 py-2 border border-transparent text-base font-medium rounded-md text-white">
+              type="submit"
+              className="items-center uppercase tracking-widest px-5 py-2 border border-transparent text-base font-medium rounded-md text-white"
+            >
               Register
             </button>
           </div>
@@ -92,7 +124,7 @@ const RegisterPage = () => {
         <div className=" mt-5 flex items-center justify-center">
           <p className=" font-thin text-[15px] tracking-widest mt-2">
             Already have an account ?{" "}
-            <Link to="/" className="text-blue-800 font-bold">
+            <Link to="/" className="text-blue-800 font-bold underline">
               Please Login
             </Link>
           </p>

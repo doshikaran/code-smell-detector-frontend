@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Cloud, File as FileIcon, Loader2 } from "lucide-react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const FileUpload = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -52,6 +54,15 @@ const FileUpload = () => {
       if (response.status === 200) {
         setFilePath(response.data.filePath);
         setUploadSuccess(true);
+        toast.success("File Uploaded Successfully.", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
         const reader = new FileReader();
         reader.onload = (e) => {
           setFileContent(e.target.result);
@@ -114,7 +125,7 @@ const FileUpload = () => {
     setIsAnalyzing(false);
   };
 
-  const detectDuplicateCode  = async () => {
+  const detectDuplicateCode = async () => {
     if (!filePath) {
       alert("No file uploaded yet!");
       return;
@@ -143,6 +154,7 @@ const FileUpload = () => {
           <h1 className=" tracking-widest text-gray-600 font-bold">
             Do make sure the file is a .py or .js file.
           </h1>
+          <ToastContainer />
         </div>
 
         <div className=" border h-60 mt-10 rounded-lg border-dashed border-gray-300 w-full mr-10">
@@ -229,7 +241,7 @@ const FileUpload = () => {
         </div>
       </div>
 
-            {/* Analysis */}
+      {/* Analysis */}
       <div className=" w-1/2  px-10 ">
         {fileContent && (
           <div>
@@ -259,7 +271,10 @@ const FileUpload = () => {
             </div>
             {analysisResult && (
               <div className=" mt-10 space-y-7">
-                <h1 className=" text-center tracking-widest uppercase text-xl font-bold underline"> Result:</h1>
+                <h1 className=" text-center tracking-widest uppercase text-xl font-bold underline">
+                  {" "}
+                  Result:
+                </h1>
                 <pre className=" text-start text-xl">{analysisResult}</pre>
               </div>
             )}
