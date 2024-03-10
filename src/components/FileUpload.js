@@ -13,6 +13,7 @@ const FileUpload = () => {
   const [analysisResult, setAnalysisResult] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [filePath, setFilePath] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
 
   const handleFileSelect = (event) => {
     const file = event.target.files[0];
@@ -139,11 +140,14 @@ const FileUpload = () => {
       setAnalysisResult(response.data);
     } catch (error) {
       console.error("Analysis error:", error);
+      console.log(error.message);
+      console.log(error.response.data);
       setAnalysisResult("Analysis failed. Please try again.");
     }
     setIsAnalyzing(false);
   };
 
+  
   return (
     <div className=" flex  mt-10 px-10 py-5 space-x-5">
       <div className=" flex-1">
@@ -152,7 +156,7 @@ const FileUpload = () => {
             Lets upload a file!
           </h1>
           <h1 className=" tracking-widest text-gray-600 font-bold">
-            Do make sure the file is a .py or .js file.
+            Do make sure the file is a .js file.
           </h1>
           <ToastContainer />
         </div>
@@ -249,22 +253,22 @@ const FileUpload = () => {
               Analysis
             </h1>
 
-            <div className="  flex items-center justify-between">
+            <div className="  flex items-center justify-between space-x-2 md:space-x-4 lg:space-x-6">
               <button
                 onClick={detectLongMethod}
-                className=" bg-black text-white p-4 rounded-md uppercase  shadow-md"
+                className=" bg-black text-white p-3 rounded-md uppercase shadow-md outline-none text-sm"
               >
                 Detect Long Method
               </button>
               <button
                 onClick={detectLongParamterList}
-                className=" bg-black text-white p-4 rounded-md uppercase  shadow-md"
+                className=" bg-black text-white p-3 rounded-md uppercase  shadow-md outline-none text-sm"
               >
                 Detect Long Parameter List
               </button>
               <button
                 onClick={detectDuplicateCode}
-                className=" bg-black text-white p-4 rounded-md uppercase  shadow-md"
+                className=" bg-black text-white p-3 rounded-md uppercase  shadow-md outline-none text-sm"
               >
                 Detect Duplicate Code
               </button>
@@ -275,7 +279,12 @@ const FileUpload = () => {
                   {" "}
                   Result:
                 </h1>
-                <pre className=" text-start text-xl">{analysisResult}</pre>
+                <pre className=" analysis-result text-start text-xl">{analysisResult}</pre>
+                <ul>
+                  {suggestions.map((suggestion, index) => (
+                    <li key={index}>{suggestion}</li>
+                  ))}
+                </ul>
               </div>
             )}
           </div>
