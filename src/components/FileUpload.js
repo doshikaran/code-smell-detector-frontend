@@ -18,13 +18,7 @@ const FileUpload = () => {
   const handleFileSelect = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
-    // const reader = new FileReader();
-    // reader.onload = (e) => {
-    //   setFileContent(e.target.result);
-    // };
-    // reader.readAsText(file);
   };
-
   const handleUpload = async () => {
     if (!selectedFile) {
       alert("Please select a file first!");
@@ -151,7 +145,7 @@ const FileUpload = () => {
   return (
     <div className=" flex  mt-10 px-10 py-5 space-x-5">
       <div className=" flex-1">
-        <div className=" flex items-center space-x-5">
+        <div className=" flex items-center space-x-1">
           <h1 className=" tracking-widest text-xl font-bold">
             Lets upload a file!
           </h1>

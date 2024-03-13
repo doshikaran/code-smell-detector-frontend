@@ -21,11 +21,6 @@ const LogInPage = () => {
       });
       const data = await response.json();
       if (response.status === 200) {
-        // retrieve user full name
-        // const userResponse = await fetch(`/user/${username}`);
-        // const userData = await userResponse.json();
-        // localStorage.setItem('fullname', userData.fullname);
-
         console.log("Log in successful", data);
         toast.success("Logged in successfully!", {
           position: "top-right",
